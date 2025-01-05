@@ -2,25 +2,25 @@
 Version := "0.2"
 
 ;====================Hotkeys=====================
-Select := "f"
-Capture := "d"
-Wait := "d"
-Fire := "s"
+Select := ""
+Capture := ""
+Wait := ""
+Fire := ""
 
-Infantry := "a"
-Mech := "s"
-Recon := "d"
+Infantry := ""
+Mech := ""
+Recon := ""
 
-TCopter := "a"
+TCopter := ""
 
-ReloadScript := "^r"
+ReloadScript := ""
 
 ;===================Settings=====================
-DeleteSkipConfirmation := "false"
-EndDaySkipConfirmation := "false"
-DisplayMenuVariables := "true"
-isPreciseSleepEnabled := "true"
-WaitTimeForMenuToOpenInMs := 8
+DeleteSkipConfirmation := ""
+EndDaySkipConfirmation := ""
+DisplayMenuVariables := ""
+isPreciseSleepEnabled := ""
+WaitTimeForMenuToOpenInMs := ""
 
 ;==================Description===================
 ;This script adds customizable advanced hotkeys to the game.
