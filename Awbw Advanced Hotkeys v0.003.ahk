@@ -17,7 +17,7 @@ ReloadScript := "^r"
 SkipConfirmationMessageDelete := "false"
 SkipConfirmationMessageEndDay := "true"
 DisplayMenuVariables := "true"
-isPreciseSleepEnabled := "true"
+UsePreciseSleepMode := "true"
 ScanDelayToWaitForMenusToOpenInMs := 8
 
 ;========================Description=========================
@@ -40,7 +40,7 @@ ScanDelayToWaitForMenusToOpenInMs := 8
 ;-The Hotkeys are case sensetive, meaning you can bind different actions to the same key. I.e you could use one key to buy an infantry when the building menu is open and use the same key as the wait command hotkey if a unit is selected. Or you could bind capture and wait to the same key, as it probably never makes sense to use the wait command if capture is availbile. In that case capture would be the prefered action.
 ;-The "Selector" hotkey functions similarly to a left mouse click, but is meant as a tool to select units and producing buildings exclusively. This has the advantage that units or building menus no longer have to be closed before clicking on other units or producing buildings with overlapping menus or unit movement ranges.
 ;-In the settings section, various settings can be activated or deactivated, by writing "true" or "false" left to the equal sign.
-;-"SkipConfirmationMessageDelete"and "SkipConfirmationMessageEndDay" skips their confirmation message box (not implemented yet). "DisplayMenuVariables" is meant for debugging purposes. "isPreciseSleepEnabled" and "ScanDelayToWaitForMenusToOpenInMs" are probably fine as they are. If you have a slow computer and run into problems, you can try to increase the wait time and set precise sleep off, which reduces the load on the CPU. The reason why a short waiting time is required in the first place is, that menus do not open immediately when clicking on something.
+;-"SkipConfirmationMessageDelete"and "SkipConfirmationMessageEndDay" skips their confirmation message box (not implemented yet). "DisplayMenuVariables" is meant for debugging purposes. "UsePreciseSleepMode" and "ScanDelayToWaitForMenusToOpenInMs" are probably fine as they are. If you have a slow computer and run into problems, you can try to increase the wait time and set precise sleep off, which reduces the load on the CPU. The reason why a short waiting time is required in the first place is, that menus do not open immediately when clicking on something.
 ;
 ;=====================Known Limitations======================
 ;-As the hotkey script is based on pixel scans, it is important that the entire playing field is always visible and not blocked by any edge of the screen or other windows on top of it (including dmg calculator, which can block ingame menus even right of the playing field). The size of the playing field should be reasonable, not too small and on the main monitor. The dpi-scaling (zoom) should be between 80% and 300%.
@@ -176,7 +176,7 @@ if ScriptVersion < VerifiedMostRecentVersion
 		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'SkipConfirmationMessageDelete := ""', 'SkipConfirmationMessageDelete := "' SkipConfirmationMessageDelete '"')
 		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'SkipConfirmationMessageEndDay := ""', 'SkipConfirmationMessageEndDay := "' SkipConfirmationMessageEndDay '"')
 		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'DisplayMenuVariables := ""', 'DisplayMenuVariables := "' DisplayMenuVariables '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'isPreciseSleepEnabled := ""', 'isPreciseSleepEnabled := "' isPreciseSleepEnabled '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'UsePreciseSleepMode := ""', 'UsePreciseSleepMode := "' UsePreciseSleepMode '"')
 		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'ScanDelayToWaitForMenusToOpenInMs := ""', 'ScanDelayToWaitForMenusToOpenInMs := "' ScanDelayToWaitForMenusToOpenInMs '"')
 		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'ReloadScript := ""', 'ReloadScript := "' ReloadScript '"')
 		if StrLen(A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk") > 1000
@@ -776,7 +776,7 @@ CheckIfUnitIsStillSelected()
 
 PreciseSleep()
 {
-	if isPreciseSleepEnabled = "true"
+	if UsePreciseSleepMode = "true"
 	{
 		DllCall("Winmm\timeBeginPeriod", "UInt", 7)
 		DllCall("Sleep", "UInt", ScanDelayToWaitForMenusToOpenInMs)
