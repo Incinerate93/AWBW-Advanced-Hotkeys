@@ -181,9 +181,9 @@ if ScriptVersion < VerifiedMostRecentVersion
 		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'isPreciseSleepEnabled := ""', 'isPreciseSleepEnabled := "' isPreciseSleepEnabled '"')
 		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'ScanDelayToWaitForMenusToOpenInMs := ""', 'ScanDelayToWaitForMenusToOpenInMs := "' ScanDelayToWaitForMenusToOpenInMs '"')
 		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'ReloadScript := ""', 'ReloadScript := "' ReloadScript '"')
-		FileAppend ContentUpdatedVersion, A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk"
-		if FileGetSize(A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk") > 100000
+		if StrLen(A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk") > 1000
 		{
+			FileAppend ContentUpdatedVersion, A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk"
 			msgbox "The new version has been downloaded successfully. The script will reload now.", "AWBW Advanced Hotkeys"
 			Run A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk"
 			ExitApp
