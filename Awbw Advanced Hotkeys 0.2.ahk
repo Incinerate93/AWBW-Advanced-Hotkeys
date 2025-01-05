@@ -1,5 +1,5 @@
-﻿#Requires AutoHotkey v2.0.18
-Version := "0.15"
+#Requires AutoHotkey v2.0.18
+Version := "0.2"
 
 ;====================Hotkeys=====================
 Select := "f"
@@ -39,7 +39,7 @@ WaitTimeForMenuToOpenInMs := 8
 ;
 ;==================Installation==================
 ;-To compile and run the hotkey script you need the AHK compiler. It is small and lightweight and can be downloaded here: https://www.autohotkey.com/
-;-After installation you can simply right click on this file and run the script. No admin rights should be needed. It is also possible to compile the script as a standalone .exe file. That way the AHK installation is not needed anymore. (Unless you want to change hotkeys later, which are stores in the script itself at the moment)
+;-After installation you can simply right click on this file and run the script. No admin rights should be needed.
 ;-To exit the script, right click the small green H icon in the System tray.(usually at the buttom right of the screen) To reload the script with new hotkeys or settings, press the reload hotkey ("Ctrl+ r" by default)
 ;
 ;===================Features=====================
@@ -138,15 +138,33 @@ if DisplayMenuVariables = "true"
 DirCreate A_AppData "\AWBW Advanced Hotkeys"
 SetWorkingDir A_AppData "\AWBW Advanced Hotkeys"
 
+LastUsedVersion := IniRead("Info.ini", "Info", "Version: " , 0)
+if LastUsedVersion = 0.5
+{
+	Try FileDelete A_ScriptDir "\AWBW Advanced Hotkeys " LastUsedVersion
+	IniWrite Version, "Info.ini", "Info", "Version: "
+}
+
 whr := ComObject("WinHttp.WinHttpRequest.5.1")
 whr.Open("GET", "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Version", true)
 whr.Send()
 whr.WaitForResponse()
 if StrReplace(whr.ResponseText, "`n", "") != Version
 {
-	result := msgbox("A new Version is availiable. Do you want to download the new Version?", "AWBW Advanced Hotkeys", "YesNo")
+	result := msgbox("A new Version is availiable. Do you want to download the new Version now?", "AWBW Advanced Hotkeys", "YesNo")
 	if result = "yes"
-		Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Capture.png", "Capture.png"
+	{
+		Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Awbw Advanced Hotkeys " StrReplace(whr.ResponseText, "`n", "") ".ahk", A_ScriptDir "\AWBW Advanced Hotkeys " StrReplace(whr.ResponseText, "`n", "") ".ahk"
+		if FileGetSize(A_ScriptDir "\AWBW Advanced Hotkeys " StrReplace(whr.ResponseText, "`n", "") ".ahk") > 100000
+		{
+			msgbox "The new version has been downloaded successfully. The script will reload now.", "AWBW Advanced Hotkeys"
+			Run A_ScriptDir "\AWBW Advanced Hotkeys " StrReplace(whr.ResponseText, "`n", "") ".ahk"
+			ExitApp
+		}
+		else
+			msgbox "The download was not successful, please try again later or check the AWBW Discord under community development.", "AWBW Advanced Hotkeys"
+	}
+		
 	else
 		msgbox "no was pressed"
 }
