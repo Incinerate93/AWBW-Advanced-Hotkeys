@@ -160,8 +160,6 @@ if ScriptVersion < VerifiedMostRecentVersion
 	result := msgbox("A new Version is availiable. Do you want to download the new Version now?", "AWBW Advanced Hotkeys", "YesNo")
 	if result = "yes"
 	{
-		if FileExist(A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk")
-			FileDelete A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk"
 		whr.Open("GET", "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Awbw Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk", true)
 		whr.Send()
 		whr.WaitForResponse()
