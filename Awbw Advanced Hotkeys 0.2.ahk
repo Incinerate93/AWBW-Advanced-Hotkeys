@@ -1,77 +1,83 @@
-#Requires AutoHotkey v2.0.18
-Version := "0.2"
+#Requires AutoHotkey v2.0
 
-;====================Hotkeys=====================
-Select := ""
-Capture := ""
-Wait := ""
-Fire := ""
+;==========================Hotkeys===========================
+Select := "f"
+Capture := "d"
+Wait := "d"
+Fire := "s"
+Infantry := "a"
+Mech := "s"
+Recon := "d"
 
-Infantry := ""
-Mech := ""
-Recon := ""
+TCopter := "a"
 
-TCopter := ""
+ReloadScript := "^r"
 
-ReloadScript := ""
+;=========================Settings===========================
+SkipConfirmationMessageDelete := "false"
+SkipConfirmationMessageEndDay := "true"
+DisplayMenuVariables := "true"
+isPreciseSleepEnabled := "true"
+ScanDelayToWaitForMenusToOpenInMs := 8
 
-;===================Settings=====================
-DeleteSkipConfirmation := ""
-EndDaySkipConfirmation := ""
-DisplayMenuVariables := ""
-isPreciseSleepEnabled := ""
-WaitTimeForMenuToOpenInMs := ""
-
-;==================Description===================
-;This script adds customizable advanced hotkeys to the game.
-;It is written with AHK which has a few limitation like being Windows-exclusive, a little bit of setup time and a few things to look out for when using it, as it relies on pixel readouts. (See below for a full list of known limitations)
+;========================Description=========================
+;This script adds customizable advanced hotkeys to AWBW.
+;It is written with AHK which has a few limitation like being Windows-exclusive, a little bit of setup time and a few things to look out for when using it, as it relies on pixel scans (See below for a full list of known limitations).
 ;My goal would be to learn js and make a proper hotkey integration or inspire another developer to do so :). So feel free to improve it if you can!
 ;
-;==================Requirements==================
-;-Only Windows is supported. (Windows 7 or later).
-;-Browser extansion: Tampermonkey is needed to install the other necessary user scripts.
-;-Script: Improved Building Menu by steve. Currently the Missle and Piperunner have to be enabled in the purchasing menu. (By default they are disabled with this script) https://cdn.discordapp.com/attachments/945580784629215253/1206374723639054356/build-menu.js?ex=677bb843&is=677a66c3&hm=f6e17d634af81c9c6906d3eb8e409cfe06ec7bfd27df3e71507ab28da4ffee30&
-;-Script: Anything that disables anti aliasing. Here is a list of scripts that i know of:
-;-Pixel Perfector by twiggy_: https://greasyfork.org/en/scripts/460264-awbw-pixel-pefector
-;-Clean Pixels by Nuion: https://greasyfork.org/en/scripts/495217-advanced-wars-clean-pixels/code
-;-AWBW Maximize by Truniht: https://greasyfork.org/en/scripts/511815-awbw-maximise
-;-As the hotkey script is based on pixel readouts, it is important that the entire playing field is always visible and not blocked by an edge of the screen or other windows (including dmg calculator, which can block ingame menus even right of the playing field) on top of it. The size of the playing field should be reasonable, not too small and on the main monitor. The dpi-scaling(zoom) should be between 80% and 300%.
+;========================Requirements========================
+;-Windows 7 or later.
+;-The browser extension Tampermonkey for installing two other required user scripts. With a quick google search you should find the right version for your browser.
+;-The Improved Building Menu script by steve and any script that disables anti aliasing (For links see in the links section below).
 ;
-;==================Installation==================
-;-To compile and run the hotkey script you need the AHK compiler. It is small and lightweight and can be downloaded here: https://www.autohotkey.com/
-;-After installation you can simply right click on this file and run the script. No admin rights should be needed.
-;-To exit the script, right click the small green H icon in the System tray.(usually at the buttom right of the screen) To reload the script with new hotkeys or settings, press the reload hotkey ("Ctrl+ r" by default)
+;========================Installation========================
+;-To run this hotkey script you need to download and install the AHK compiler.
+;-After installation, you can simply run any AHK script by clicking the right mouse button and selecting "Run script".
+;-To exit the script, right click the small green H icon in the System tray (usually at the buttom right of the screen). To reload the script with new keybinds or settings, press the reload hotkey ("Ctrl+ r" by default).
 ;
-;===================Features=====================
-;-Every unit command and everything from the purchase menu can be assigned to any key. A complete list of how each key is called can be found here: https://www.autohotkey.com/docs/v2/KeyList.htm
-;-The Hotkeys are context sensetive, meaning you can bind different actions on the same key. I.e you could use one key to buy an infantry when the purchase menu is open and use the same key for the wait command if a unit is selected. Another example: You could bind capture and wait to the same key, as it probably never makes sense to use the wait command if capture is availbile. In that case capture would be the prefered action.
-;-The "Selector" hotkey functions similarly to a left mouse click, but is meant as a tool to select units and bases exclusively. This has the advantage that units or purchase menus no longer have to be closed before clicking on other units or bases with overlapping ranges.
-;-In the Settings area, various settings can be activated or deactivated, by writing "true" or "false" left to the equal sign.
-;-"DeleteSkipConfirmation"and "EndDaySkipConfirmation" skips their confirmation box. (not implemented yet) "DisplayMenuVariables" is meant for debugging purposes. "isPreciseSleepEnabled" and "WaitTimeForMenuToOpenInMs" are probably fine as they are. If you have a slow computer and run into problems, you can try to increase the wait time and set precise sleep off, which reduces the load on the CPU. The reason why a short waiting time is required is that menus do not open immediately when you click on something.
+;=========================Features===========================
+;-Every unit command and everything from the building menu can be assigned to any key. A complete list of possible keys can be found in the links section below. If you do not want certain hotkeys to be assigned, write "" after the equals sign
+;-The Hotkeys are case sensetive, meaning you can bind different actions to the same key. I.e you could use one key to buy an infantry when the building menu is open and use the same key as the wait command hotkey if a unit is selected. Or you could bind capture and wait to the same key, as it probably never makes sense to use the wait command if capture is availbile. In that case capture would be the prefered action.
+;-The "Selector" hotkey functions similarly to a left mouse click, but is meant as a tool to select units and producing buildings exclusively. This has the advantage that units or building menus no longer have to be closed before clicking on other units or producing buildings with overlapping menus or unit movement ranges.
+;-In the settings section, various settings can be activated or deactivated, by writing "true" or "false" left to the equal sign.
+;-"SkipConfirmationMessageDelete"and "SkipConfirmationMessageEndDay" skips their confirmation message box (not implemented yet). "DisplayMenuVariables" is meant for debugging purposes. "isPreciseSleepEnabled" and "ScanDelayToWaitForMenusToOpenInMs" are probably fine as they are. If you have a slow computer and run into problems, you can try to increase the wait time and set precise sleep off, which reduces the load on the CPU. The reason why a short waiting time is required in the first place is, that menus do not open immediately when clicking on something.
 ;
-;===================Changelog====================
+;=====================Known Limitations======================
+;-As the hotkey script is based on pixel scans, it is important that the entire playing field is always visible and not blocked by any edge of the screen or other windows on top of it (including dmg calculator, which can block ingame menus even right of the playing field). The size of the playing field should be reasonable, not too small and on the main monitor. The dpi-scaling (zoom) should be between 80% and 300%.
+;-The hotkey script is currently not compatible with user scripts that hides certain entries in the building menu (i.e. Piperunner and Missiles).
 ;
-;
-;===============Known Limitations================
-;-Improved Building Menu Mod by steve is required. 
-;-Any script to disable antialaising is required. Pixel Perfector, Clean Pixels or AWBW Maximize should all work.
-;-The Script relies on pixel scans. Keep your browser maximized on your main screen and do not let the damage calculator or other windows interfer with the game and/ or game menus in and near the game area.
-;-Keep the dpi scaling between 80% and 300%.
-;
-;==================ToDoList======================
+;========================ToDoList============================
 ;-Add missing Unit actions and purchasing menu entries.
-;-Add end turn Hotkey
-;-Reimplement the hotkey to switch to the next unused unit and recognize the menu
+;-Add end turn Hotkey.
+;-Add a setting to skip confirmation boxes.
+;-Add compatibility with the e hotkey (recognize menus that are opened with it)
 ;-After moving an occupied transport unit, the menu for unloading the occupants is not recognized.
-;-Automatically check for updates.
 ;
-;=================Script start===================
+;==========================Links=============================
+;-Improved Building Menu by steve. To install click on the Tampermonkey extension -> "Create a new script..." -> paste the content of the link -> File -> Save. https://cdn.discordapp.com/attachments/945580784629215253/1206374723639054356/build-menu.js?ex=677bb843&is=677a66c3&hm=f6e17d634af81c9c6906d3eb8e409cfe06ec7bfd27df3e71507ab28da4ffee30&
+;-Pixel Perfector by twiggy_: https://greasyfork.org/en/scripts/460264-awbw-pixel-pefector
+;-AWBW Maximize by Truniht: https://greasyfork.org/en/scripts/511815-awbw-maximise
+;-Download AHK to compile and run this script: https://www.autohotkey.com/
+;-List of bindable keys: https://www.autohotkey.com/docs/v2/KeyList.htm
+;-Find and fix bugs
+;
+;=========================Changelog==========================
+;2025-01-05 v0.001
+;	-First release. Creation of the basic structure and a few hotkeys to test.
+;2025-01-06 v0.002
+;	-Added a ReadMe part (description, installation steps etc.).
+;	-Added an auto update feature.
+;2025-01-06 v0.003
+;	-The auto updater now keeps previous keybinds and settings.
+;
+;=======================Script start=========================
 #SingleInstance Force
 Critical
 SetKeyDelay -1
 SetMouseDelay -1
 SetDefaultMouseSpeed 0
 
+ScriptVersion := "0.003"
 NumberOfUnitMenuEntries := 1
 isWaitAvailable := "false"
 WaitX := 0
@@ -130,47 +136,61 @@ HalfScreenWidth := round(A_ScreenWidth / 2)
 HalfScreenHeight := round(A_ScreenHeight / 2)
 Scan := ShinsImageScanClass()
 InitializeHotkeyVariablesWithoutModifier()
-CheckIfPlayingFieldChanged()
-SetTimer CheckIfPlayingFieldChanged, 500, -1
-if DisplayMenuVariables = "true"
-	SetTimer TooltipTimer, 50, -2
 
 DirCreate A_AppData "\AWBW Advanced Hotkeys"
 SetWorkingDir A_AppData "\AWBW Advanced Hotkeys"
 
-LastUsedVersion := IniRead("Info.ini", "Info", "Version" , 0)
-if LastUsedVersion < Version
+LastUsedScriptVersion := IniRead("Info.ini", "Info", "Version" , 0)
+if LastUsedScriptVersion < ScriptVersion
 {
-	while WinExist("AWBW Advanced Hotkeys " LastUsedVersion ".ahk")
-		WinClose "AWBW Advanced Hotkeys " LastUsedVersion ".ahk"
-	Try FileDelete A_ScriptDir "\AWBW Advanced Hotkeys " LastUsedVersion ".ahk"
-	IniWrite Version, "Info.ini", "Info", "Version"
+	while WinExist("AWBW Advanced Hotkeys v" LastUsedScriptVersion ".ahk")
+		WinClose "AWBW Advanced Hotkeys v" LastUsedScriptVersion ".ahk"
+	Try FileDelete A_ScriptDir "\AWBW Advanced Hotkeys v" LastUsedScriptVersion ".ahk"
+	IniWrite ScriptVersion, "Info.ini", "Info", "Version"
 }
 
 whr := ComObject("WinHttp.WinHttpRequest.5.1")
 whr.Open("GET", "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Version", true)
 whr.Send()
 whr.WaitForResponse()
-if StrReplace(whr.ResponseText, "`n", "") != Version
+VerifiedMostRecentVersion := StrReplace(whr.ResponseText, "`n", "")
+
+if ScriptVersion < VerifiedMostRecentVersion
 {
 	result := msgbox("A new Version is availiable. Do you want to download the new Version now?", "AWBW Advanced Hotkeys", "YesNo")
 	if result = "yes"
 	{
-		Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Awbw Advanced Hotkeys " StrReplace(whr.ResponseText, "`n", "") ".ahk", A_ScriptDir "\AWBW Advanced Hotkeys " StrReplace(whr.ResponseText, "`n", "") ".ahk"
-		if FileGetSize(A_ScriptDir "\AWBW Advanced Hotkeys " StrReplace(whr.ResponseText, "`n", "") ".ahk") > 100000
+		whr.Open("GET", "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Awbw Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk", true)
+		whr.Send()
+		whr.WaitForResponse()
+		ContentUpdatedVersion := whr.ResponseText
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Select := ""', 'Select := "' Select '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Capture := ""', 'Capture := "' Capture '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Wait := ""', 'Wait := "' Wait '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Fire := ""', 'Fire := "' Fire '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Infantry := ""', 'Infantry := "' Infantry '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Mech := ""', 'Mech := "' Mech '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Recon := ""', 'Recon := "' Recon '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'TCopter := ""', 'TCopter := "' TCopter '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'ReloadScript := ""', 'ReloadScript := "' ReloadScript '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'SkipConfirmationMessageDelete := ""', 'SkipConfirmationMessageDelete := "' SkipConfirmationMessageDelete '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'SkipConfirmationMessageEndDay := ""', 'SkipConfirmationMessageEndDay := "' SkipConfirmationMessageEndDay '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'DisplayMenuVariables := ""', 'DisplayMenuVariables := "' DisplayMenuVariables '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'isPreciseSleepEnabled := ""', 'isPreciseSleepEnabled := "' isPreciseSleepEnabled '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'ScanDelayToWaitForMenusToOpenInMs := ""', 'ScanDelayToWaitForMenusToOpenInMs := "' ScanDelayToWaitForMenusToOpenInMs '"')
+		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'ReloadScript := ""', 'ReloadScript := "' ReloadScript '"')
+		FileAppend ContentUpdatedVersion, A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk"
+		if FileGetSize(A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk") > 100000
 		{
 			msgbox "The new version has been downloaded successfully. The script will reload now.", "AWBW Advanced Hotkeys"
-			Run A_ScriptDir "\AWBW Advanced Hotkeys " StrReplace(whr.ResponseText, "`n", "") ".ahk"
+			Run A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk"
 			ExitApp
 		}
 		else
 			msgbox "The download was not successful, please try again later or check the AWBW Discord under community development.", "AWBW Advanced Hotkeys"
 	}
-		
-	else
-		msgbox "no was pressed"
 }
-	
+
 if !FileExist("55w41h.png")
 	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/55w41h.png", "55w41h.png"
 if !FileExist("Capture.png")
@@ -187,6 +207,11 @@ if !FileExist("Unload.png")
 	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Unload.png", "Unload.png"
 if !FileExist("Wait.png")
 	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Wait.png", "Wait.png"
+	
+CheckIfPlayingFieldChanged()
+SetTimer CheckIfPlayingFieldChanged, 500, -1
+if DisplayMenuVariables = "true"
+	SetTimer TooltipTimer, 50, -2
 Critical "Off"
 
 #Hotif WinActive("View Game - AWBW")
@@ -196,7 +221,7 @@ Critical "Off"
 	global
 	Critical
 	MouseGetPos &mouseX, &mouseY
-	checkIfSthIsSelected("Mouse")
+	CheckIfSthIsSelected("Mouse")
 }
 
 ~*LButton up::
@@ -217,7 +242,7 @@ SelectPressed(ThisHotkey)
 	if (InGameMenuType != 0 and mouseX - 4 > InGameMenuX and mouseX + 4 < InGameMenuX + InGameMenuWidth and mouseY - 4 > InGameMenuY and mouseY + 4 < InGameMenuY + InGameMenuHeight or InGameMenuType = "Unit")
 		ClickInCornerToDeselect()
 	Click mouseX, mouseY, "Down"
-	checkIfSthIsSelected("Selector")
+	CheckIfSthIsSelected("Selector")
 }
 
 ClickInCornerToDeselect()
@@ -228,7 +253,7 @@ ClickInCornerToDeselect()
 		Click PlayingFieldX  + 10, PlayingFieldY + 10
 }
 
-checkIfSthIsSelected(TypeOfSearch)
+CheckIfSthIsSelected(TypeOfSearch)
 {
 	global
 	Critical
@@ -569,7 +594,7 @@ WaitNow(ThisHotkey)
 	if isUnitSelected = "true"
 	{
 		Click mouseX, mouseY
-		checkIfSthIsSelected("Mouse")
+		CheckIfSthIsSelected("Mouse")
 	}
 	if isWaitAvailable = "true"
 	{
@@ -602,7 +627,7 @@ CaptureNow(ThisHotkey)
 	if isUnitSelected = "true"
 	{
 		Click mouseX, mouseY
-		checkIfSthIsSelected("Mouse")
+		CheckIfSthIsSelected("Mouse")
 	}
 	if isCaptureAvailable = "true"
 	{
@@ -635,7 +660,7 @@ FireNow(ThisHotkey)
 	if isUnitSelected = "true"
 	{
 		Click mouseX, mouseY
-		checkIfSthIsSelected("Mouse")
+		CheckIfSthIsSelected("Mouse")
 		if isFireAvailable = "true"
 		{
 			Click FireX, FireY
@@ -754,11 +779,11 @@ PreciseSleep()
 	if isPreciseSleepEnabled = "true"
 	{
 		DllCall("Winmm\timeBeginPeriod", "UInt", 7)
-		DllCall("Sleep", "UInt", WaitTimeForMenuToOpenInMs)
+		DllCall("Sleep", "UInt", ScanDelayToWaitForMenusToOpenInMs)
 		DllCall("Winmm\timeEndPeriod", "UInt", 7)
 	}
 	else
-		Sleep WaitTimeForMenuToOpenInMs + 9
+		Sleep ScanDelayToWaitForMenusToOpenInMs + 9
 }
 
 TooltipTimer()
