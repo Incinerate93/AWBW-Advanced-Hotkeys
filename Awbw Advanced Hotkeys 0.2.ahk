@@ -141,7 +141,6 @@ SetWorkingDir A_AppData "\AWBW Advanced Hotkeys"
 LastUsedVersion := IniRead("Info.ini", "Info", "Version" , 0)
 if LastUsedVersion < Version
 {
-	msgbox "deleting old script"
 	FileDelete A_ScriptDir "\AWBW Advanced Hotkeys " LastUsedVersion ".ahk"
 	IniWrite Version, "Info.ini", "Info", "Version"
 }
