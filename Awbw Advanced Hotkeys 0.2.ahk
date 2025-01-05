@@ -138,12 +138,12 @@ if DisplayMenuVariables = "true"
 DirCreate A_AppData "\AWBW Advanced Hotkeys"
 SetWorkingDir A_AppData "\AWBW Advanced Hotkeys"
 
-LastUsedVersion := IniRead("Info.ini", "Info", "Version: " , 0)
+LastUsedVersion := IniRead("Info.ini", "Info", "Version=" , 0)
 if LastUsedVersion < Version
 {
 	msgbox "deleting old script"
 	Try FileDelete A_ScriptDir "\AWBW Advanced Hotkeys " LastUsedVersion
-	IniWrite Version, "Info.ini", "Info", "Version: "
+	IniWrite Version, "Info.ini", "Info", "Version="
 }
 
 whr := ComObject("WinHttp.WinHttpRequest.5.1")
