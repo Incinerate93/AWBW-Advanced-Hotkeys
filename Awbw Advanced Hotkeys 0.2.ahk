@@ -139,7 +139,7 @@ DirCreate A_AppData "\AWBW Advanced Hotkeys"
 SetWorkingDir A_AppData "\AWBW Advanced Hotkeys"
 
 LastUsedVersion := IniRead("Info.ini", "Info", "Version: " , 0)
-if LastUsedVersion = 0.5
+if LastUsedVersion < Version
 {
 	Try FileDelete A_ScriptDir "\AWBW Advanced Hotkeys " LastUsedVersion
 	IniWrite Version, "Info.ini", "Info", "Version: "
