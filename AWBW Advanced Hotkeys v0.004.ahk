@@ -85,7 +85,6 @@ SetMouseDelay -1
 SetDefaultMouseSpeed 0
 
 ScriptVersion := "0.004"
-ImageCounterYo := 0
 
 if SkipConfirmationMessageDelete != "false" and SkipConfirmationMessageDelete != "true"
 	SkipConfirmationMessageDelete := "false"
@@ -240,6 +239,10 @@ if !FileExist("1w160h.png")
 	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/1w160h.png", "1w160h.png"
 if !FileExist("ZoomIn.png")
 	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/ZoomIn.png", "ZoomIn.png"
+if !FileExist("Coin.png")
+	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Coin.png", "Coin.png"
+if !FileExist("48w1hGray.png")
+	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/48w1hGray.png", "48w1hGray.png"
 	
 CheckIfPlayingFieldChanged()
 SetTimer CheckIfPlayingFieldChanged, 500, -2
@@ -968,6 +971,8 @@ CalibrateMapCoordAndZoom()
 {
 	global
 	Critical
+	Tooltip MostRecentError
+	Sleep 250
 	;MouseGetPos &mouseX, &mouseY
 	Send "d"
 	if (GetKeyState("LButton"))
@@ -1018,19 +1023,38 @@ CalibrateMapCoordAndZoom()
 		MostRecentError := "Map is misaligned."
 		return
 	}
-	Tooltip MapX " " MapY " " MapX  + MapW " " MapY + MapH, 100, 100
-	
+	;Tooltip MapX " " MapY " " MapX  + MapW " " MapY + MapH, 100, 100
 	if isGameMaximized = "true"
 	{
-			if Scan.ImageRegion("100w1hBeige.png", MapX + MapW, MapY, 200, A_ScreenHeight - MapY, variance:=0, &DayCounterX:=0, &DayCounterYW:=0, centerResults:=0, "BTLR")
-				{
-						if Scan.PixelRegion(0, DayCounterX - 5, DayCounterY - 5, 10, 10, 0, &returnX:=0, &returnY:=0, "LRTB")
-						{
-							MostRecentError := "Cannot find day counter."
-							return
-						}
-						if Scan.PixelRegion(0xbeigecolor, DayCounterX + 5, 50, 1, DayCounterY + 45, 0, &returnX:=0, &returnY:=0, "BTLR")
-				}
+		;if Scan.ImageRegion("48w1hGray.png", MapX + MapW, MapY, 200, A_ScreenHeight - MapY, variance:=0, &DayCounterX:=0, &DayCounterYW:=0, centerResults:=0, "BTLR")
+		if Scan.ImageRegion("48w1hGray.png", 0, 0, A_ScreenWidth, A_ScreenHeight, variance:=0, &DayCounterX:=0, &DayCounterYW:=0, centerResults:=0, "BTLR")
+		{
+			if Scan.PixelRegion(0, DayCounterX - 5, DayCounterYW - 5, 10, 10, 0, &returnX:=0, &returnY:=0, "LRTB")
+			{
+				Tooltip "Found black pixels near gray bar."
+				MostRecentError := "Cannot find day counter."
+				return
+			}
+			if Scan.PixelRegion(16777215, DayCounterX + 10, DayCounterYW, 1, 5, 0, &returnX:=0, &returnY:=0, "BTLR")
+			{
+				Tooltip "Found white pixels near gray bar."
+				MostRecentError := "Cannot find day counter."
+				return
+			}
+			while Scan.PixelPosition(8421504, DayCounterX + 10, DayCounterYW, variance:=0) and DayCounterYW > 50
+				DayCounterYW--
+			DayCounterYW++
+			if Scan.PixelRegion(8421504, DayCounterX + 10, 50, 1, DayCounterYW - 50, 0, &returnX:=0, &DayCounterY:=0, "BTLR")
+				 DayCounterW := DayCounterYW - DayCounterY  + 1
+			Zoom
+		}
+		else
+		{
+			Tooltip "Found black pixels near gray bar."
+			MostRecentError := "Cannot find day counter."
+			return
+		}
+				
 		
 	}
 	else
@@ -1040,6 +1064,7 @@ CalibrateMapCoordAndZoom()
 	
 }
 /*
+
 
 
 Scan.GetPixel(MapX, returnY - 1, 0) = 16316664
