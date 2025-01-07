@@ -1022,17 +1022,15 @@ CalibrateMapCoordAndZoom()
 	
 	if isGameMaximized = "true"
 	{
-		if Scan.PixelRegion(26316, MapX + MapW, 50, A_ScreenWidth - MapX - MapW, A_ScreenWidth - 50, 0, &DmgCalcX:=0, &DmgCalcY:=0, "RLTB")
-		{
-			Send "c"
-			PreciseSleep()
-			Scan.Update()
-			Send "c"
-		}
-		else
-		{
-			DmgCalcY := A_ScreenHeight - 60
-		}
+			if Scan.ImageRegion("100w1hBeige.png", MapX + MapW, MapY, 200, A_ScreenHeight - MapY, variance:=0, &DayCounterX:=0, &DayCounterYW:=0, centerResults:=0, "BTLR")
+				{
+						if Scan.PixelRegion(0, DayCounterX - 5, DayCounterY - 5, 10, 10, 0, &returnX:=0, &returnY:=0, "LRTB")
+						{
+							MostRecentError := "Cannot find day counter."
+							return
+						}
+						if Scan.PixelRegion(0xbeigecolor, DayCounterX + 5, 50, 1, DayCounterY + 45, 0, &returnX:=0, &returnY:=0, "BTLR")
+				}
 		
 	}
 	else
