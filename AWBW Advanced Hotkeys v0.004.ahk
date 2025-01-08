@@ -2,23 +2,27 @@
 
 ;==========================Hotkeys===========================
 Select := "f"
-Capture := ""
-Wait := ""
-Fire := ""
+Capture := "d"
+Wait := "d"
+Fire := "s"
 Infantry := "a"
 Mech := "s"
 Recon := "d"
 
 TCopter := "a"
 
-EndTurn := ""
+EndTurn := "^e"
 
 ReloadScript := "^r"
+CheckForUpdates := "^u"
+
+PauseScript :=  "^p"
+CloseScript := ">+e"
 
 ;=========================Settings===========================
 SkipConfirmationMessageDelete := "false"
 SkipConfirmationMessageEndDay := "false"
-DisplayMenuVariables := "true"
+DebugMode := "true"
 UsePreciseSleepMode := "true"
 ScanDelayToWaitForMenusToOpenInMs := 8
 
@@ -34,33 +38,33 @@ ScanDelayToWaitForMenusToOpenInMs := 8
 ;
 ;========================Installation========================
 ;-To run this hotkey script you need to download and install the AHK compiler.
-;-After installation, you can simply run any AHK script by clicking the right mouse button and selecting "Run script".
-;-To exit the script, right click the small green H icon in the System tray (usually at the buttom right of the screen). To reload the script with new keybinds or settings, press the reload hotkey ("Ctrl+ r" by default).
+;-After installation, you can simply run any AHK script by right clicking the .ahk file and selecting "Run script".
+;-To close the script, right click the small green H icon in the System tray (usually at the buttom right of the screen) or use the close script hotkey.
 ;
 ;=========================Features===========================
-;-Every unit command and everything from the building menu can be assigned to any key. A complete list of possible keys can be found in the links section below. If you do not want certain hotkeys to be assigned, write "" after the equals sign
+;-Every unit command and everything from the building menu can be assigned to any key. Simply change the character of any keybinding in the Hotkeys section and save the file. Changes are applied automatically. A complete list of possible keys can be found in the links section below. If you do not want certain hotkeys to be assigned, write "" after the equals sign
 ;-The Hotkeys are case sensetive, meaning you can bind different actions to the same key. I.e you could use one key to buy an infantry when the building menu is open and use the same key as the wait command hotkey if a unit is selected. Or you could bind capture and wait to the same key, as it probably never makes sense to use the wait command if capture is availbile. In that case capture would be the prefered action.
 ;-The "Selector" hotkey functions similarly to a left mouse click, but is meant as a tool to select units and producing buildings exclusively. This has the advantage that units or building menus no longer have to be closed before clicking on other units or producing buildings with overlapping menus or unit movement ranges.
 ;-In the settings section, various settings can be activated or deactivated, by writing "true" or "false" left to the equal sign.
-;-"SkipConfirmationMessageDelete"and "SkipConfirmationMessageEndDay" skips their confirmation message box (not implemented yet). "DisplayMenuVariables" is meant for debugging purposes. "UsePreciseSleepMode" and "ScanDelayToWaitForMenusToOpenInMs" are probably fine as they are. If you have a slow computer and run into problems, you can try to increase the wait time and set precise sleep off, which reduces the load on the CPU. The reason why a short waiting time is required in the first place is, that menus do not open immediately when clicking on something.
+;-"SkipConfirmationMessageDelete"and "SkipConfirmationMessageEndDay" skips their confirmation message box (not implemented yet). "DebugMode" is meant for debugging purposes. "UsePreciseSleepMode" and "ScanDelayToWaitForMenusToOpenInMs" are probably fine as they are. If you have a slow computer and run into problems, you can try to increase the wait time and set precise sleep off, which reduces the load on the CPU. The reason why a short waiting time is required in the first place is, that menus do not open immediately when clicking on something.
+;-The Script automatically checks for an update once a day. You can also manually check for updates with the update hotkey. The hotkey settings are kept when updating.
 ;
 ;=====================Known Limitations======================
-;-As the hotkey script is based on pixel scans, it is important that the entire playing field is always visible and not blocked by any edge of the screen or other windows on top of it (including dmg calculator, which can block ingame menus even right of the playing field). The size of the playing field should be reasonable, not too small and on the main monitor. The dpi-scaling (zoom) should be between 80% and 300%.
-;-The hotkey script is currently not compatible with user scripts that hides certain entries in the building menu (i.e. Piperunner and Missiles).
-;-If you run into problems and certain hotkeys are not working, you set the setting "DisplayMenuVariables" to "true" to check whether the script itself recognizes errors
+;-As the hotkey script is based on pixel scans, it is important that the entire map is always visible and not blocked by any edge of the screen or other windows on top of it (including the dmgage calculator, which can block ingame menus even outside the map). The size of the map should be reasonable, not too small and on the main monitor. The dpi-scaling (zoom) should be between 80% and 200%.
+;-The hotkey script is currently not compatible with user scripts that hides certain entries in the building menu (i.e. Piperunner and Missiles). There may also be other user script which changes the look of the game which are not compatible.
+;-If you run into problems and certain hotkeys are not working, you set "DebugMode" to "true" to check whether the script itself recognizes errors.
 ;
 ;========================ToDoList============================
-;-Add missing Unit actions and purchasing menu entries.
-;-Add end turn Hotkey.
-;-Add a setting to skip confirmation boxes.
+;-Add missing Unit actions and building menu hotkeys.
 ;-Add compatibility with the e hotkey (recognize menus that are opened with it)
-;-After moving an occupied transport unit, the menu for unloading the occupants is not recognized.
+;-After moving an occupied transport unit, the menu for unloading the occupants is currently not recognized.
+;-Do not accept unit actions inputs, if the action is not availiable. Currently the menu is opened and get stuck.
 ;-Find and fix bugs
 ;
 ;==========================Links=============================
 ;-Improved Building Menu by steve. To install click on the Tampermonkey extension -> "Create a new script..." -> paste the content of the link -> File -> Save. https://cdn.discordapp.com/attachments/945580784629215253/1206374723639054356/build-menu.js?ex=677bb843&is=677a66c3&hm=f6e17d634af81c9c6906d3eb8e409cfe06ec7bfd27df3e71507ab28da4ffee30&
 ;-Pixel Perfector by twiggy_: https://greasyfork.org/en/scripts/460264-awbw-pixel-pefector
-;-AWBW Maximize by Truniht: https://greasyfork.org/en/scripts/511815-awbw-maximise
+;-(optional)AWBW Maximize by Truniht: https://greasyfork.org/en/scripts/511815-awbw-maximise
 ;-Download AHK to compile and run this script: https://www.autohotkey.com/
 ;-List of bindable keys: https://www.autohotkey.com/docs/v2/KeyList.htm
 ;
@@ -73,16 +77,17 @@ ScanDelayToWaitForMenusToOpenInMs := 8
 ;2025-01-06 v0.003
 ;	-The auto updater now keeps previous keybinds and settings.
 ;2025-01-07 v0.004
-;	-Detection system of changes in playing field position and size improved.
-;	-Added end turn Hotkey.
-;	-Improved zoom level detection
-;	-
+;	-Detection system of changes in map position and size improved.
+;	-Added end turn and other QOL Hotkey.
+;	-Improved dpi/ zoom level detection
+;
 ;=======================Script start=========================
 #SingleInstance Force
 Critical
 SetKeyDelay -1
 SetMouseDelay -1
 SetDefaultMouseSpeed 0
+A_HotkeyInterval := 0
 
 ScriptVersion := "0.004"
 
@@ -90,14 +95,13 @@ if SkipConfirmationMessageDelete != "false" and SkipConfirmationMessageDelete !=
 	SkipConfirmationMessageDelete := "false"
 if SkipConfirmationMessageEndDay != "false" and SkipConfirmationMessageEndDay != "true"
 	SkipConfirmationMessageEndDay := "false"
-if DisplayMenuVariables != "false" and DisplayMenuVariables != "true"
-	DisplayMenuVariables := "false"
+if DebugMode != "false" and DebugMode != "true"
+	DebugMode := "false"
 if UsePreciseSleepMode != "false" and UsePreciseSleepMode != "true"
 	UsePreciseSleepMode := "true"
 if ScanDelayToWaitForMenusToOpenInMs = ""
 	ScanDelayToWaitForMenusToOpenInMs := 8
 
-NumberOfUnitMenuEntries := 1
 isWaitAvailable := "false"
 WaitX := 0
 WaitY := 0
@@ -136,34 +140,35 @@ MapH := 0
 Zoom := 0
 EdgeThickness := 1
 isMapCalibrated := "false"
-EndTurnX := 0
-EndTurnY := 0
+CoinX := 0
+CoinY := 0
 InGameMenuX := 0
 InGameMenuY := 0
-InGameMenuWidth := 0
-InGameMenuHeight := 0
+InGameMenuW := 0
+InGameMenuH := 0
 InGameMenuType := 0
 PastInGameMenuType := 0
+NumberOfUnitMenuEntries := 1
 isEndDayConfirmationBoxOpen := "false"
 isDeleteConfirmationBoxOpen := "false"
 isUnitSelected := "false"
 wasUnitSelected := "false"
 MostRecentError := ""
 LastKeyHeldDown := ""
-EndTurnButtonNotFoundCounter := 0
+CalibrationCounter := 0
 LargestPossibleTileDependingOnScreenResolution := 150 / 1080  * A_ScreenHeight
-A_HotkeyInterval := 0
-HalfScreenWidth := round(A_ScreenWidth / 2)
-HalfScreenHeight := round(A_ScreenHeight / 2)
+ScriptModifiedDate := FileGetTime(A_ScriptFullPath)
+HalfScreenW := round(A_ScreenWidth / 2)
+HalfScreenH := round(A_ScreenHeight / 2)
+
 Scan := ShinsImageScanClass()
 InitializeHotkeyVariablesWithoutModifier()
-
-
 
 DirCreate A_AppData "\AWBW Advanced Hotkeys"
 SetWorkingDir A_AppData "\AWBW Advanced Hotkeys"
 
 LastUsedScriptVersion := IniRead("Info.ini", "Info", "Version" , 0)
+
 if LastUsedScriptVersion < ScriptVersion
 {
 	while WinExist("AWBW Advanced Hotkeys v" LastUsedScriptVersion ".ahk")
@@ -172,47 +177,57 @@ if LastUsedScriptVersion < ScriptVersion
 	IniWrite ScriptVersion, "Info.ini", "Info", "Version"
 }
 
-whr := ComObject("WinHttp.WinHttpRequest.5.1")
-whr.Open("GET", "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Version", true)
-whr.Send()
-whr.WaitForResponse()
-VerifiedMostRecentVersion := StrReplace(whr.ResponseText, "`n", "")
-
-if ScriptVersion < VerifiedMostRecentVersion
+if IniRead("Info.ini", "Info", "LastUpdateSearch" , 0) != A_YYYY "-" A_MM "-" A_DD
 {
-	result := msgbox("A new Version is availiable. Do you want to download the new Version now?", "AWBW Advanced Hotkeys", "YesNo")
-	if result = "yes"
+	IniWrite A_YYYY "-" A_MM "-" A_DD, "Info.ini", "Info", "LastUpdateSearch"
+	CheckAndInstallUpdate("false")
+}
+
+CheckAndInstallUpdate(Notification)
+{
+	whr := ComObject("WinHttp.WinHttpRequest.5.1")
+	whr.Open("GET", "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Version", true)
+	whr.Send()
+	whr.WaitForResponse()
+	VerifiedMostRecentVersion := StrReplace(whr.ResponseText, "`n", "")
+	if ScriptVersion < VerifiedMostRecentVersion
 	{
-		whr.Open("GET", "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Awbw Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk", true)
-		whr.Send()
-		whr.WaitForResponse()
-		ContentUpdatedVersion := whr.ResponseText
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Select := ""', 'Select := "' Select '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Capture := ""', 'Capture := "' Capture '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Wait := ""', 'Wait := "' Wait '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Fire := ""', 'Fire := "' Fire '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Infantry := ""', 'Infantry := "' Infantry '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Mech := ""', 'Mech := "' Mech '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Recon := ""', 'Recon := "' Recon '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'TCopter := ""', 'TCopter := "' TCopter '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'EndTurn := ""', 'EndTurn := "' EndTurn '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'ReloadScript := ""', 'ReloadScript := "' ReloadScript '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'SkipConfirmationMessageDelete := ""', 'SkipConfirmationMessageDelete := "' SkipConfirmationMessageDelete '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'SkipConfirmationMessageEndDay := ""', 'SkipConfirmationMessageEndDay := "' SkipConfirmationMessageEndDay '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'DisplayMenuVariables := ""', 'DisplayMenuVariables := "' DisplayMenuVariables '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'UsePreciseSleepMode := ""', 'UsePreciseSleepMode := "' UsePreciseSleepMode '"')
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, "ScanDelayToWaitForMenusToOpenInMs := ", "ScanDelayToWaitForMenusToOpenInMs := " ScanDelayToWaitForMenusToOpenInMs)
-		ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'ReloadScript := ""', 'ReloadScript := "' ReloadScript '"')
-		if StrLen(A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk") > 1000
+		result := msgbox("An update is availiable, do you want to download the new Version now?`n`nCurrent Version is:`t" " v" ScriptVersion "Availiable Version is:`t" " v" VerifiedMostRecentVersion, "AWBW Advanced Hotkeys", "YesNo")
+		if result = "yes"
 		{
-			FileAppend ContentUpdatedVersion, A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk"
-			msgbox "The new version has been downloaded successfully. The script will reload now.", "AWBW Advanced Hotkeys"
-			Run A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk"
-			ExitApp
+			whr.Open("GET", "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Awbw Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk", true)
+			whr.Send()
+			whr.WaitForResponse()
+			ContentUpdatedVersion := whr.ResponseText
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Select := ""', 'Select := "' Select '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Capture := ""', 'Capture := "' Capture '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Wait := ""', 'Wait := "' Wait '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Fire := ""', 'Fire := "' Fire '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Infantry := ""', 'Infantry := "' Infantry '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Mech := ""', 'Mech := "' Mech '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'Recon := ""', 'Recon := "' Recon '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'TCopter := ""', 'TCopter := "' TCopter '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'EndTurn := ""', 'EndTurn := "' EndTurn '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'ReloadScript := ""', 'ReloadScript := "' ReloadScript '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'CheckForUpdates := ""', 'CheckForUpdates := "' CheckForUpdates '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'SkipConfirmationMessageDelete := ""', 'SkipConfirmationMessageDelete := "' SkipConfirmationMessageDelete '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'SkipConfirmationMessageEndDay := ""', 'SkipConfirmationMessageEndDay := "' SkipConfirmationMessageEndDay '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'DebugMode := ""', 'DebugMode := "' DebugMode '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, 'UsePreciseSleepMode := ""', 'UsePreciseSleepMode := "' UsePreciseSleepMode '"')
+			ContentUpdatedVersion := StrReplace(ContentUpdatedVersion, "ScanDelayToWaitForMenusToOpenInMs := ", "ScanDelayToWaitForMenusToOpenInMs := " ScanDelayToWaitForMenusToOpenInMs)
+			if StrLen(A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk") > 1000
+			{
+				FileAppend ContentUpdatedVersion, A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk"
+				msgbox "The new version has been downloaded successfully. The script will reload now.", "AWBW Advanced Hotkeys"
+				Run A_ScriptDir "\AWBW Advanced Hotkeys v" VerifiedMostRecentVersion ".ahk"
+				ExitApp
+			}
+			else
+				msgbox "The download was not successful, please try again later or check the AWBW Discord under community development.", "AWBW Advanced Hotkeys"
 		}
-		else
-			msgbox "The download was not successful, please try again later or check the AWBW Discord under community development.", "AWBW Advanced Hotkeys"
 	}
+	else if Notification = "true"
+		msgbox "Your Version is up to date.`n`nCurrent Version is:`t" " v" ScriptVersion, "AWBW Advanced Hotkeys"
 }
 
 if !FileExist("55w41h.png")
@@ -237,19 +252,59 @@ if !FileExist("Confirm.png")
 	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Confirm.png", "Confirm.png"
 if !FileExist("1w160h.png")
 	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/1w160h.png", "1w160h.png"
-if !FileExist("ZoomIn.png")
-	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/ZoomIn.png", "ZoomIn.png"
-if !FileExist("Coin.png")
-	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Coin.png", "Coin.png"
 if !FileExist("48w1hGray.png")
 	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/48w1hGray.png", "48w1hGray.png"
+if !FileExist("Coin.png")
+	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Coin.png", "Coin.png"
+if !FileExist("CoinMarked.png")
+	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/CoinMarked.png", "CoinMarked.png"
+if !FileExist("Calculator.png")
+	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/Calculator.png", "Calculator.png"
+if !FileExist("CalculatorMarked.png")
+	Download "https://raw.githubusercontent.com/Incinerate93/AWBW-Advanced-Hotkeys/refs/heads/main/CalculatorMarked.png", "CalculatorMarked.png"
+
 	
-CheckIfPlayingFieldChanged()
-SetTimer CheckIfPlayingFieldChanged, 500, -2
-;if DisplayMenuVariables = "true"
-	;SetTimer TooltipTimer, 80, -1
+CheckIfMapHasChanged()
+SetTimer CheckIfMapHasChanged, 500, -2
+
+if DebugMode = "true"
+	SetTimer TooltipTimer, 80, -1
+	
 Critical "Off"
 
+;Try Hotkey ReloadScript, ReloadScriptPressed
+Try Hotkey CheckForUpdates, CheckForUpdatesPressed
+
+Hotif 'WinActive("View Game - AWBW") && isMapCalibrated = "true"'
+	Try Hotkey EndTurn, EndTurnPressed
+	Try Hotkey Select, SelectPressed
+	Try Hotkey Infantry, InfantryPressed
+	Try Hotkey Mech, MechPressed
+	Try Hotkey Recon, ReconPressed
+	
+	Try Hotkey TCopter, TCopterPressed
+	
+	Try Hotkey Fire, FirePressed
+	
+	Try Hotkey Wait, WaitPressed
+	Try Hotkey Capture, CapturePressed	
+Hotif
+	
+Hotif 'WinActive("View Game - AWBW")'
+	Try Hotkey "*" EndTurnNoModifier " up", EndTurnReleased
+	Try Hotkey "*" SelectNoModifier " up", SelectReleased
+	Try Hotkey "*" InfantryNoModifier " up", InfantryReleased
+	Try Hotkey "*" MechNoModifier " up", MechReleased
+	Try Hotkey "*" ReconNoModifier " up", ReconReleased
+	Try Hotkey "*" TCopterNoModifier " up", TCopterReleased
+	Try Hotkey "*" WaitNoModifier " up", WaitReleased
+	Try Hotkey "*" CaptureNoModifier " up", CaptureReleased
+	Try Hotkey "*" FireNoModifier " up", FireReleased
+	Try Hotkey "*" CheckForUpdatesNoModifier " up", CheckForUpdatesReleased	
+Hotif
+
+#Hotif WinActive("View Game - AWBW") && InGameMenuType == "Base"
+#Hotif WinActive("View Game - AWBW") && isMapCalibrated = "true"
 #Hotif WinActive("View Game - AWBW")
 
 ~*LButton::
@@ -275,10 +330,18 @@ SelectPressed(ThisHotkey)
 	AutoRepeatSuppression(SelectNoModifier)
 	MouseGetPos &mouseX, &mouseY
 	Send "d"
-	if (InGameMenuType != 0 and mouseX - 4 > InGameMenuX and mouseX + 4 < InGameMenuX + InGameMenuWidth and mouseY - 4 > InGameMenuY and mouseY + 4 < InGameMenuY + InGameMenuHeight or InGameMenuType = "Unit")
+	if (InGameMenuType != 0 and mouseX - 4 > InGameMenuX and mouseX + 4 < InGameMenuX + InGameMenuW and mouseY - 4 > InGameMenuY and mouseY + 4 < InGameMenuY + InGameMenuH or InGameMenuType = "Unit")
 		ClickInCornerToDeselect()
 	Click mouseX, mouseY, "Down"
 	CheckIfSthIsSelected("Selector")
+}
+
+SelectReleased(ThisHotkey)
+{
+	Click "Up"
+	ReleaseHotkey(SelectNoModifier)
+	if (isUnitSelected = "true")
+		CheckIfUnitIsStillSelected()
 }
 
 ClickInCornerToDeselect()
@@ -317,6 +380,8 @@ CheckIfSthIsSelected(TypeOfSearch)
 	}
 	else
 		isUnitSelected := "false"
+	
+	/*
 	SearchAreaX := round(mouseX - LargestPossibleTileDependingOnScreenResolution - 350 / 100 * (Zoom + 5)) ;to save performance try to reduce the potential distance to the In-Game menu x and y position
 	if SearchAreaX < MapX
 		SearchAreaX := MapX + 1
@@ -326,9 +391,18 @@ CheckIfSthIsSelected(TypeOfSearch)
 	else if SearchAreaY < MapY
 		SearchAreaY := MapY + 1
 	if Scan.ImageRegion("55w41h.png", SearchAreaX, SearchAreaY, MapX + MapW - SearchAreaX + 57, MapY + MapH - SearchAreaY, variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "TBLR")
+
+	DllCall("QueryPerformanceFrequency", "Int64*", &freq := 0)
+	DllCall("QueryPerformanceCounter", "Int64*", &StartTime := 0)
+	
+	DllCall("QueryPerformanceCounter", "Int64*", &EndTime := 0)
+	msgbox (EndTime - StartTime) / freq * 1000
+	*/
+	
+	if Scan.ImageRegion("55w41h.png", MapX + 2, MapY - 1, MapW + 55, MapH + 41, variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "TBLR")
 	{
 		if Scan.PixelPosition(26316, returnX + EdgeThickness * 2 + 2, returnY + EdgeThickness * 2 + 2, variance:=0)	;check if detected menu is the dmg calculator
-		{
+		{	
 			MostRecentError := "The damage calculator might affect the pixel scans."
 			return
 		}
@@ -340,22 +414,22 @@ CheckIfSthIsSelected(TypeOfSearch)
 		MostRecentError := "`nIn case a unit or building menu is currently shown:`nCould not detect the top left edge of the menu."
 		return
 	}
-	if Scan.PixelRegion(0, InGameMenuX + 1, InGameMenuY + 1, A_ScreenWidth - InGameMenuX - 2, 1, variance:=0, &returnX:=0, &returnY:=0, "LRTB")
-		InGameMenuWidth := returnX - InGameMenuX
+	if Scan.PixelRegion(0, InGameMenuX + 1, InGameMenuY + 3, A_ScreenWidth - InGameMenuX - 2, 1, variance:=0, &returnX:=0, &returnY:=0, "LRTB")
+		InGameMenuW := returnX - InGameMenuX
 	else
 	{
 		MostRecentError := "Cannot get Width of the menu"
 		return
 	}
 	if Scan.PixelRegion(0, InGameMenuX + 1, InGameMenuY + 1, 1, A_ScreenHeight - InGameMenuY - 2, variance:=0, &returnX:=0, &returnY:=0, "LRTB")
-		InGameMenuHeight := returnY - InGameMenuY
+		InGameMenuH := returnY - InGameMenuY
 	else	
 	{
-		InGameMenuHeight := Scan.PixelCountRegion(0, InGameMenuX, InGameMenuY, 1, A_ScreenHeight - InGameMenuY, variance:=0)
+		InGameMenuH := Scan.PixelCountRegion(0, InGameMenuX, InGameMenuY, 1, A_ScreenHeight - InGameMenuY, variance:=0)
 		Counter := 0
-		while !Scan.PixelPosition(0,InGameMenuX, InGameMenuY + InGameMenuHeight, variance:=0) and Counter < 300
+		while !Scan.PixelPosition(0,InGameMenuX, InGameMenuY + InGameMenuH, variance:=0) and Counter < 300
 		{
-			InGameMenuHeight--
+			InGameMenuH--
 			Counter++
 		}
 		if Counter > 200
@@ -365,12 +439,14 @@ CheckIfSthIsSelected(TypeOfSearch)
 		}
 			
 	}
-	if InGameMenuHeight > 300 / 100 * Zoom
+	if InGameMenuH > 300 / 100 * Zoom
 	{
 		MostRecentError := "Improved building menu missing?"
 		return
 	}
-	if InGameMenuWidth < 30 / 100 * (Zoom - 5) ;check if the detected Menu is too small to get the Menu type
+	
+	msgbox InGameMenuX " " InGameMenuY
+	if InGameMenuW < 30 / 100 * (Zoom - 5) ;check if the detected Menu is too small to get the Menu type
 	{
 		MostRecentError := "Found menu is too small"
 		return
@@ -379,38 +455,38 @@ CheckIfSthIsSelected(TypeOfSearch)
 		MostRecentError := ""
 	if TypeOfSearch = "Mouse" and wasUnitSelected = "true" or PastInGameMenuType = "Unit"
 	{
-		if !Scan.PixelRegion(0, InGameMenuX + 1, InGameMenuY + 1, round(InGameMenuWidth / 2), round(InGameMenuHeight / 2), variance:=0, &returnX:=0, &returnY:=0, "TBLR")
+		if !Scan.PixelRegion(0, InGameMenuX + 1, InGameMenuY + 1, round(InGameMenuW / 2), round(InGameMenuH / 2), variance:=0, &returnX:=0, &returnY:=0, "TBLR")
 		{
 			NumberOfFoundUnitMenuEntries := 0
-			if InGameMenuHeight < 60 / 100 * Zoom
+			if InGameMenuH < 60 / 100 * Zoom
 				NumberOfUnitMenuEntries := 1
-			else if InGameMenuHeight < 100 / 100 * Zoom
+			else if InGameMenuH < 100 / 100 * Zoom
 				NumberOfUnitMenuEntries := 2
-			else if InGameMenuHeight < 135 / 100 * Zoom
+			else if InGameMenuH < 135 / 100 * Zoom
 				NumberOfUnitMenuEntries := 3
 			else
 				NumberOfUnitMenuEntries := 4
 			if NumberOfUnitMenuEntries = 1
 			{
-				if Scan.ImageRegion("Wait.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
+				if Scan.ImageRegion("Wait.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
 				{
 					WaitX := returnX
 					WaitY := returnY
 					isWaitAvailable := "true"
 				}
-				else if Scan.PixelRegion(7901432, round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, "LRTB")
+				else if Scan.PixelRegion(7901432, round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, "LRTB")
 				{
 					JoinX := returnX
 					JoinY := returnY
 					isJoinAvailable := "true"
 				}
-				else if Scan.PixelRegion(16466432, round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, "LRTB")
+				else if Scan.PixelRegion(16466432, round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, "LRTB")
 				{
 					LoadX := returnX
 					LoadY := returnY
 					isLoadAvailable := "true"
 				}
-				else if Scan.ImageRegion("Unload.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
+				else if Scan.ImageRegion("Unload.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
 				{
 					UnloadX := returnX
 					UnloadY := returnY
@@ -419,56 +495,56 @@ CheckIfSthIsSelected(TypeOfSearch)
 			}
 			else
 			{
-				if Scan.ImageRegion("Wait.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
+				if Scan.ImageRegion("Wait.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
 				{
 					WaitX := returnX
 					WaitY := returnY
 					isWaitAvailable := "true"
 					NumberOfFoundUnitMenuEntries++
 				}
-				if Scan.ImageRegion("Capture.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
+				if Scan.ImageRegion("Capture.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
 				{
 					CaptureX := returnX
 					CaptureY := returnY
 					isCaptureAvailable := "true"
 					NumberOfFoundUnitMenuEntries++
 				}
-				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.ImageRegion("Delete.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
+				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.ImageRegion("Delete.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
 				{
 					DeleteX := returnX
 					DeleteY := returnY
 					isDeleteAvailable := "true"
 					NumberOfFoundUnitMenuEntries++
 				}
-				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.ImageRegion("Fire.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
+				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.ImageRegion("Fire.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
 				{
 					FireX := returnX
 					FireY := returnY
 					isFireAvailable := "true"
 					NumberOfFoundUnitMenuEntries++
 				}
-				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.PixelRegion(9796437, round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, "LRTB")
+				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.PixelRegion(9796437, round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, "LRTB")
 				{
 					RepairX := returnX
 					RepairY := returnY
 					isRepairAvailable := "true"
 					NumberOfFoundUnitMenuEntries++
 				}
-				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.ImageRegion("Unload.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
+				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.ImageRegion("Unload.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
 				{
 					UnloadX := returnX
 					UnloadY := returnY
 					isUnloadAvailable := "true"
 					NumberOfFoundUnitMenuEntries++
 				}
-				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.ImageRegion("Supply.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
+				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.ImageRegion("Supply.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
 				{
 					SupplyX := returnX
 					SupplyY := returnY
 					isSupplyAvailable := "true"
 					NumberOfFoundUnitMenuEntries++			
 				}
-				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.ImageRegion("Hide.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuWidth - 14 / 100 * Zoom), round(InGameMenuHeight - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
+				if NumberOfFoundUnitMenuEntries < NumberOfUnitMenuEntries and Scan.ImageRegion("Hide.png", round(InGameMenuX + 7 / 100 * Zoom), round(InGameMenuY + 11 / 100 * Zoom), round(InGameMenuW - 14 / 100 * Zoom), round(InGameMenuH - 22 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRTB")
 				{
 					HideX := returnX
 					HideY := returnY
@@ -480,15 +556,15 @@ CheckIfSthIsSelected(TypeOfSearch)
 			return
 		}
 	}
-	if InGameMenuHeight > 250 / 100 * Zoom and InGameMenuHeight < 285 / 100 * Zoom
+	if InGameMenuH > 250 / 100 * Zoom and InGameMenuH < 285 / 100 * Zoom
 		InGameMenuType := "Base"	
-	else if Scan.PixelRegion(11394791, InGameMenuX, InGameMenuY, round(InGameMenuWidth / 2), round(InGameMenuHeight / 2), 0, &returnX:=0, &returnY:=0, "LRTB")
+	else if Scan.PixelRegion(11394791, InGameMenuX, InGameMenuY, round(InGameMenuW / 2), round(InGameMenuH / 2), 0, &returnX:=0, &returnY:=0, "LRTB")
 		InGameMenuType := "Shipyard"
-	else if Scan.PixelRegion(7969697, InGameMenuX, InGameMenuY, round(InGameMenuWidth / 2), round(InGameMenuHeight / 2), 0, &returnX:=0, &returnY:=0, "LRTB")
+	else if Scan.PixelRegion(7969697, InGameMenuX, InGameMenuY, round(InGameMenuW / 2), round(InGameMenuH / 2), 0, &returnX:=0, &returnY:=0, "LRTB")
 		InGameMenuType := "Shipyard"
-	else if Scan.PixelRegion(9089721, InGameMenuX, InGameMenuY, round(InGameMenuWidth / 2), round(InGameMenuHeight / 2), 0, &returnX:=0, &returnY:=0, "LRTB")
+	else if Scan.PixelRegion(9089721, InGameMenuX, InGameMenuY, round(InGameMenuW / 2), round(InGameMenuH / 2), 0, &returnX:=0, &returnY:=0, "LRTB")
 		InGameMenuType := "Shipyard"
-	else if Scan.PixelRegion(0, InGameMenuX + 1, InGameMenuY + 1, round(InGameMenuWidth / 2), round(InGameMenuHeight / 2), variance:=0, &returnX:=0, &returnY:=0, "TBLR")
+	else if Scan.PixelRegion(0, InGameMenuX + 1, InGameMenuY + 1, round(InGameMenuW / 2), round(InGameMenuH / 2), variance:=0, &returnX:=0, &returnY:=0, "TBLR")
 		InGameMenuType := "Airport"
 	else if Scan.PixelRegion(16314400, round(InGameMenuX + 8 / 100 * Zoom), round(InGameMenuY + 12 / 100 * Zoom), round(16 / 100 * Zoom), round(16 / 100 * Zoom), variance:=0, &returnX:=0, &returnY:=0, "TBLR")
 	{
@@ -605,7 +681,7 @@ EndTurnPressed(ThisHotkey)
 	}
 	if isGameMaximized = "false"
 	{
-		if Scan.ImageRegion("EndTurn.png", HalfScreenWidth + 100, 50, HalfScreenWidth - 100, MapY - 50, variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "RLBT")
+		if Scan.ImageRegion("EndTurn.png", HalfScreenW + 100, 50, HalfScreenW - 100, MapY - 50, variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "RLBT")
 		{
 			Click returnX, returnY
 			mousemove mouseX, mouseY
@@ -708,14 +784,6 @@ BuyUnitIfAffordable(MenuItemX, MenuItemY)
 	}
 }
 
-SelectReleased(ThisHotkey)
-{
-	Click "Up"
-	ReleaseHotkey(SelectNoModifier)
-	if (isUnitSelected = "true")
-		CheckIfUnitIsStillSelected()
-}
-
 WaitPressed(ThisHotkey)
 {
 	global
@@ -810,50 +878,31 @@ FireNow(ThisHotkey)
 	}
 }
 
-ReloadScriptPressed(ThisHotkey)
-{
-	reload()
-}
+
 
 FireReleased(ThisHotkey)
 {
 	ReleaseHotkey(FireNoModifier)
 }
 
-Try Hotkey ReloadScript, ReloadScriptPressed
-Hotif 'WinActive("View Game - AWBW") && isMapCalibrated = "true"'
-	Try Hotkey EndTurn, EndTurnPressed
-	Try Hotkey Select, SelectPressed
-	Try Hotkey Infantry, InfantryPressed
-	Try Hotkey Mech, MechPressed
-	Try Hotkey Recon, ReconPressed
-	
-	Try Hotkey TCopter, TCopterPressed
-	
-	Try Hotkey Fire, FirePressed
-	
-	Try Hotkey Wait, WaitPressed
-	Try Hotkey Capture, CapturePressed	
-Hotif
-	
-Hotif 'WinActive("View Game - AWBW")'
-	Try Hotkey "*" EndTurnNoModifier " up", EndTurnReleased
-	Try Hotkey "*" SelectNoModifier " up", SelectReleased
-	Try Hotkey "*" InfantryNoModifier " up", InfantryReleased
-	Try Hotkey "*" MechNoModifier " up", MechReleased
-	Try Hotkey "*" ReconNoModifier " up", ReconReleased
-	Try Hotkey "*" TCopterNoModifier " up", TCopterReleased
-	Try Hotkey "*" WaitNoModifier " up", WaitReleased
-	Try Hotkey "*" CaptureNoModifier " up", CaptureReleased
-	Try Hotkey "*" FireNoModifier " up", FireReleased	
-Hotif
 
-#Hotif WinActive("View Game - AWBW")
-*RButton::return
-*RButton up::return
-#Hotif WinActive("View Game - AWBW") && InGameMenuType == "Base"
-#Hotif WinActive("View Game - AWBW") && isMapCalibrated = "true"
-#Hotif
+
+ReloadScriptPressed(ThisHotkey)
+{
+	reload()
+}
+
+CheckForUpdatesPressed(ThisHotkey)
+{
+	global
+	AutoRepeatSuppression(CheckForUpdatesNoModifier)
+	CheckAndInstallUpdate("true")
+}
+
+CheckForUpdatesReleased(ThisHotkey)
+{
+	ReleaseHotkey(CheckForUpdatesNoModifier)
+}
 
 AutoRepeatSuppression(HotkeyNoModifier)
 {
@@ -882,6 +931,7 @@ InitializeHotkeyVariablesWithoutModifier()
 	WaitNoModifier := RemoveModifier(Wait)
 	CaptureNoModifier := RemoveModifier(Capture)
 	FireNoModifier := RemoveModifier(Fire)
+	CheckForUpdatesNoModifier := RemoveModifier(CheckForUpdates)
 }
 
 RemoveModifier(Key)
@@ -930,15 +980,37 @@ PreciseSleep()
 
 TooltipTimer()
 {
+	global
 	if WinActive("View Game - AWBW")
-		Tooltip EndTurnButtonNotFoundCounter "`nMap:`tX: " MapX " Y: " MapY " W: " MapW " H: " MapH "`nZoom: " Zoom "`nisGameMaximized: " isGameMaximized  "`nisMapCalibrated: " isMapCalibrated "`nInGameMenu:`tX: " InGameMenuX "Y: " InGameMenuY " W: " InGameMenuWidth " H: " InGameMenuHeight "`nInGameMenuType: " InGameMenuType "`nisUnitSelected: " isUnitSelected "`n`nMostRecentError: " MostRecentError, A_ScreenWidth / 2  - MapW /  4, 0
+	{
+		if isMapCalibrated = "false"
+		{
+			MapX := 0
+			MapY := 0
+			MapW := 0
+			MapH := 0
+		}
+		if InGameMenuType = 0
+		{
+			InGameMenuX := 0
+			InGameMenuY := 0
+			InGameMenuW := 0
+			InGameMenuH := 0
+		}
+		Tooltip "Map:`t`tX: " MapX " Y: " MapY " W: " MapW " H: " MapH "`n`t`tZoom: " Zoom "`n`t`tisGameMaximized: " isGameMaximized  "`n`t`tisMapCalibrated: " isMapCalibrated "`n`nInGameMenu:`tX: " InGameMenuX "Y: " InGameMenuY " W: " InGameMenuW " H: " InGameMenuH "`n`t`tInGameMenuType: " InGameMenuType "`n`t`tisUnitSelected: " isUnitSelected "`n`nMostRecentError: " MostRecentError, A_ScreenWidth / 14 *  5 , 0
+	}
 	else
 		Tooltip
 }
 
-CheckIfPlayingFieldChanged()
+CheckIfMapHasChanged()
 {
 	global
+	if ScriptModifiedDate != FileGetTime(A_ScriptFullPath)
+	{
+		ScriptModifiedDate := FileGetTime(A_ScriptFullPath)
+		reload()
+	}
 	if !WinActive("View Game - AWBW")
 	{
 		return
@@ -946,23 +1018,14 @@ CheckIfPlayingFieldChanged()
 	Scan.Update()
 	if isMapCalibrated = "false"
 		CalibrateMapCoordAndZoom()
-	else
+	else if !Scan.PixelPosition(12226835, CoinX, CoinY,variance:=0) and !Scan.PixelPosition(16701507, CoinX + 1, CoinY,variance:=0) and !Scan.PixelPosition(2445730, CoinX, CoinY,variance:=0) and !Scan.PixelPosition(3366827, CoinX + 1, CoinY,variance:=0)
 	{
-		if Scan.ImageRegion("EndTurn.png", HalfScreenWidth + 150, 0, A_ScreenWidth - HalfScreenWidth - 150, A_ScreenHeight, variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "RLTB")
-		{
-			EndTurnButtonNotFoundCounter := 0
-			if returnX != EndTurnX or returnY != EndTurnY
-				CalibrateMapCoordAndZoom()
-		}
+		if Scan.ImageRegion("Coin.png", 60, 60, A_ScreenWidth - 120, A_ScreenWidth - 120, variance:=0, &CoinX:=0, &CoinY:=0, centerResults:=0, "TBRL") or Scan.ImageRegion("CoinMarked.png", 60, 60, A_ScreenWidth - 120, A_ScreenWidth - 120, variance:=0, &CoinX:=0, &CoinY:=0, centerResults:=0, "TBRL")
+			CalibrateMapCoordAndZoom()
 		else
 		{
-			EndTurnButtonNotFoundCounter++
-			MostRecentError := "Cannot find end turn button"
-			if EndTurnButtonNotFoundCounter > 3
-			{
-				EndTurnButtonNotFoundCounter := 0
-				isMapCalibrated := "false"
-			}
+			MostRecentError := "Something is blocking the view of the player info."
+			return
 		}
 	}
 }
@@ -971,20 +1034,22 @@ CalibrateMapCoordAndZoom()
 {
 	global
 	Critical
-	Tooltip MostRecentError
-	Sleep 250
-	;MouseGetPos &mouseX, &mouseY
+	isMapCalibrated := "false"
+	CalibrationCounter++
+	;if MostRecentError != ""
+	;	Tooltip "Error: " MostRecentError, A_ScreenWidth / 2  - MapW /  4, 0
+	MouseGetPos &mouseX, &mouseY
 	Send "d"
 	if (GetKeyState("LButton"))
 		Click "up"
-	;MouseMove A_ScreenWidth, A_ScreenHeight, 0
+	MouseMove A_ScreenWidth, A_ScreenHeight, 0
 	PreciseSleep()
-	;MouseMove mouseX, mouseY, 0
+	MouseMove mouseX, mouseY, 0
 	PreciseSleep()
-	;MouseMove A_ScreenWidth, A_ScreenHeight, 0
+	MouseMove A_ScreenWidth, A_ScreenHeight, 0
 	PreciseSleep()
 	Scan.Update()
-	;MouseMove mouseX, mouseY, 0
+	MouseMove mouseX, mouseY, 0
 	if Scan.PixelCountRegion(16448221, 60, 10, A_ScreenWidth - 120, A_ScreenHeight - 300, variance:=0) > 200
 	{
 		searchX := 100
@@ -995,253 +1060,163 @@ CalibrateMapCoordAndZoom()
 		searchX := 2
 		isGameMaximized := "true"
 	}
-	if !Scan.ImageRegion("1w160h.png", searchX, 5, round(A_ScreenWidth / 2), round(A_ScreenHeight / 2), variance:=0, &MapX:=0, &MapY:=0, centerResults:=0, "LRTB")
+	if !Scan.ImageRegion("1w160h.png", searchX, 5, A_ScreenWidth, A_ScreenHeight, variance:=0, &MapX:=0, &MapY:=0, centerResults:=0, "LRTB")
 	{
 		MostRecentError := "Cannot detect the left edge of the map."
 		return
 	}
-	
-	
-	if Scan.ImageRegion("1w160h.png", searchX, 5, A_ScreenWidth - searchX, A_ScreenHeight - 5, variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "BTLR")
+	if Scan.ImageRegion("1w160h.png", searchX, 5, A_ScreenWidth - searchX, A_ScreenHeight - 5, variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "LRBT")
 		MapH := returnY + 160 - MapY
 	else
 	{
-		MostRecentError := "Cannot detect the left edge of the map."
-		return
-	}
-	if Scan.PixelRegion(0, MapX + 10, MapY, A_ScreenWidth - MapX- 10, 1, 0, &returnX:=0, &returnY:=0, "RLTB")
-	{
-		MapW := returnX - MapX
-	}
-	else
-	{
-		MostRecentError := "Cannot detect the top edge of the map."
-		return
-	}
-	if MapX > HalfScreenWidth or MapX + MapW < HalfScreenWidth
-	{
-		MostRecentError := "Map is misaligned."
-		return
-	}
-	;Tooltip MapX " " MapY " " MapX  + MapW " " MapY + MapH, 100, 100
-	if isGameMaximized = "true"
-	{
-		;if Scan.ImageRegion("48w1hGray.png", MapX + MapW, MapY, 200, A_ScreenHeight - MapY, variance:=0, &DayCounterX:=0, &DayCounterYW:=0, centerResults:=0, "BTLR")
-		if Scan.ImageRegion("48w1hGray.png", 0, 0, A_ScreenWidth, A_ScreenHeight, variance:=0, &DayCounterX:=0, &DayCounterYW:=0, centerResults:=0, "BTLR")
-		{
-			if Scan.PixelRegion(0, DayCounterX - 5, DayCounterYW - 5, 10, 10, 0, &returnX:=0, &returnY:=0, "LRTB")
-			{
-				Tooltip "Found black pixels near gray bar."
-				MostRecentError := "Cannot find day counter."
-				return
-			}
-			if Scan.PixelRegion(16777215, DayCounterX + 10, DayCounterYW, 1, 5, 0, &returnX:=0, &returnY:=0, "BTLR")
-			{
-				Tooltip "Found white pixels near gray bar."
-				MostRecentError := "Cannot find day counter."
-				return
-			}
-			while Scan.PixelPosition(8421504, DayCounterX + 10, DayCounterYW, variance:=0) and DayCounterYW > 50
-				DayCounterYW--
-			DayCounterYW++
-			if Scan.PixelRegion(8421504, DayCounterX + 10, 50, 1, DayCounterYW - 50, 0, &returnX:=0, &DayCounterY:=0, "BTLR")
-				 DayCounterW := DayCounterYW - DayCounterY  + 1
-			Zoom
-		}
-		else
-		{
-			Tooltip "Found black pixels near gray bar."
-			MostRecentError := "Cannot find day counter."
-			return
-		}
-				
-		
-	}
-	else
-	{
-	
-	}
-	
-}
-/*
-
-
-
-Scan.GetPixel(MapX, returnY - 1, 0) = 16316664
-
-MouseGetPos &mouseX, &mouseY
-	if (mouseX > MapX and mouseX < MapX + 250)
-	{
-		if  Scan.PixelRegion(3366804, MapX, 50, 1, A_ScreenHeight - 50, 0, &returnX:=0, &returnY:=0, "LRTB")
-		{
-			MouseMove -250, 0, 0, "R"
-			Sleep 24
-			Scan.Update()
-			MouseMove mouseX, mouseY, 0
-		}
-	}
-
-
-
-
-
-
-
-
-
-
-CalibrateMapCoordAndZoom()
-{
-	global
-	isMapCalibrated := "false"
-	if Scan.PixelRegion(16448221, 0, HalfScreenHeight, HalfScreenWidth, 1, 0, &returnX:=0, &returnY:=0, "BTLR") ;Check if the beige frame is around the playing field, if so, the game is not fullscreen
-		isGameMaximized := "false"
-	else
-		isGameMaximized := "true"
-	if (Scan.PixelRegion(0, returnX + 1, HalfScreenHeight, HalfScreenWidth, 50, 0, &returnX:=0, &returnY:=0, "TBLR"))
-		MapX := returnX
-	else
-	{
-		MostRecentError := "Cannot find`nall edges of the playing field."
-		return
-	}
-	if MapX > HalfScreenWidth
-	{
-		MostRecentError := "Playing field misaligned."
-		return
-	}
-	MouseGetPos &mouseX, &mouseY
-	if (mouseX > MapX and mouseX < MapX + 250)
-	{
-		if  Scan.PixelRegion(3366804, MapX, 50, 1, A_ScreenHeight - 50, 0, &returnX:=0, &returnY:=0, "LRTB")
-		{
-			MouseMove -250, 0, 0, "R"
-			Sleep 24
-			Scan.Update()
-			MouseMove mouseX, mouseY, 0
-		}
-	}
-	MapY := HalfScreenHeight - Scan.PixelCountRegion(0, MapX, 0, 1, HalfScreenHeight, variance:=0)
-	Counter := 0
-	while !Scan.PixelPosition(0,MapX, MapY, variance:=0) and Counter < 300
-	{
-		MapY++
-		Counter++
-	}
-	if Counter > 200
-	{
-		MostRecentError := "Map detection got stuck while trying to get the y coordinate of the top edge."
-		return
-	}
-	MapH := Scan.PixelCountRegion(0, MapX, MapY, 1, A_ScreenHeight - MapY, variance:=0)
-	Counter := 0
-	while !Scan.PixelPosition(0,MapX, MapY + MapH, variance:=0) and MapH > 100 and Counter < 300
-	{
-		MapH--
-		Counter++
-	}
-	if Counter > 200
-	{
-		MostRecentError := "Map detection got stuck while trying to get the height."
+		MostRecentError := "Cannot detect the left edge of the map. [E2]"
 		return
 	}
 	if isGameMaximized = "false"
 	{
-		if !Scan.PixelRegion(16448221, HalfScreenWidth, MapY + MapH, 1, A_ScreenHeight - MapY - MapH, 0, &returnX:=0, &returnY:=0, "LRTB")
+		if Scan.PixelRegion(16448221, MapX + 10, MapY, A_ScreenWidth - MapX - 10, 1, 0, &returnX:=0, &returnY:=0, "LRTB")
 		{
-			MostRecentError := "Map misaligned."
+			if Scan.PixelPosition(0, returnX - 1, MapY,variance:=0)
+				MapW := returnX - MapX
+			else
+			{
+				MostRecentError := "Cannot detect the top right corner of the map. [E1]"
+				return
+			}
+		}
+		else
+		{
+			MostRecentError := "Cannot detect the top right corner of the map. [E2]"
 			return
 		}
 	}
-	if Scan.PixelRegion(0, round(A_ScreenWidth / 4), MapY, A_ScreenWidth - round(A_ScreenWidth / 4), 1, 0, &returnX:=0, &returnY:=0, "RLTB")
-		MapW :=  returnX - MapX
 	else
 	{
-		MostRecentError := "Cannot detect the`ntop right corner of the map."
-		return
+		if Scan.PixelRegion(0, MapX + 10, MapY, A_ScreenWidth - MapX- 10, 1, 0, &returnX:=0, &returnY:=0, "RLTB")
+			MapW := returnX - MapX
+		else
+		{
+			MostRecentError := "Cannot detect the top edge of the map."
+			return
+		}
 	}
-	if Scan.PixelCountRegion(0, MapX, MapY, MapW, 1, variance:=0) < MapW / 2
+	if MapX > HalfScreenW or MapX + MapW < HalfScreenW
 	{
-		MostRecentError := "Cannot detect the`ntop edge of the map."
+		MostRecentError := "Map is misaligned."
 		return
 	}
-	EdgeThickness := 0
-	while Scan.PixelCountRegion(0, MapX + EdgeThickness, MapY, 1, 100, variance:=0) = 100 and EdgeThickness < 4
-		EdgeThickness++
+	if isGameMaximized = "true"
+	{
+		if Scan.ImageRegion("48w1hGray.png", MapX + MapW, MapY, 200, A_ScreenHeight - MapY, variance:=0, &DayCounterX:=0, &DayCounterYH:=0, centerResults:=0, "BTLR")
+		{
+			if Scan.PixelRegion(0, DayCounterX - 5, DayCounterYH - 5, 10, 10, 0, &returnX:=0, &returnY:=0, "LRTB")
+			{
+				MostRecentError := "Cannot find the day counter. [E1]"
+				return
+			}
+			if Scan.PixelRegion(16777215, DayCounterX + 10, DayCounterYH, 1, 5, 0, &returnX:=0, &returnY:=0, "BTLR")
+			{
+				MostRecentError := "Cannot find the day counter. [E2]"
+				return
+			}
+		}
+		else
+		{
+			MostRecentError := "Cannot find the day counter. [E3]"
+			return
+		}
+		while Scan.PixelPosition(8421504, DayCounterX + 10, DayCounterYH, variance:=0) and DayCounterYH > 50
+			DayCounterYH--
+		if Scan.PixelRegion(8421504, DayCounterX + 10, 50, 1, DayCounterYH - 50, 0, &returnX:=0, &DayCounterY:=0, "BTLR")
+			 DayCounterH := DayCounterYH - DayCounterY  + 1
+		else
+		{
+			MostRecentError := "Cannot find the day counter. [E4]"
+			return
+		}
+		Zoom := round(100 / 48 * DayCounterH)
+	}
+	else
+	{
+		Zoom := 0
+		if Scan.ImageRegion("Calculator.png", 0, 0, A_ScreenWidth, MapY, variance:=0, &CalculatorXM:=0, &CalculatorYM:=0, centerResults:=0, "BTLR") or Scan.ImageRegion("CalculatorMarked.png", 0, 0, A_ScreenWidth, MapY, variance:=0, &CalculatorXM:=0, &CalculatorYM:=0, centerResults:=0, "BTLR")
+		{
+			if Scan.PixelRegion(8947848, CalculatorXM - 100, CalculatorYM, 100, 1, 0, &CalculatorX:=0, &returnY:=0, "RLTB") and Scan.PixelRegion(8947848, CalculatorXM, CalculatorYM, 100, 1, 0, &CalculatorXW:=0, &returnY:=0, "LRTB")
+			{
+				CalculatorW := CalculatorXW - CalculatorX - 1
+				Zoom := round((100 / 34 * CalculatorW) / 5) * 5
+			}	
+		}
+		if Zoom = 0
+		{
+			if Scan.PixelRegion(16448221, 60, 100, HalfScreenW - 60, A_ScreenHeight - 200, 0, &returnX:=0, &returnY:=0, "BTLR")
+				BgBeigeX := returnX
+			else
+			{
+				MostRecentError := "Keep the zoom level between 80% and 200%. [E1]"
+				return
+			}
+			if Scan.PixelRegion(16448221, HalfScreenW, 100, HalfScreenW, A_ScreenHeight - 200, 0, &returnX:=0, &returnY:=0, "BTRL")
+				BgBeigeW := returnX - BgBeigeX + 1
+			else
+			{
+				MostRecentError := "Keep the zoom level between 80% and 200%. [E2]"
+				return
+			}
+			if BgBeigeW > A_ScreenWidth - 120
+			{
+				MostRecentError := "Zoom is too high."
+				return
+			}
+			Zoom := BgBeigeW / 12
+		}
+	}
+	if Zoom < 80 or Zoom > 210
+	{
+		MostRecentError := "Keep the zoom level between 80% and 200%. [E4]"
+		return
+	}
+	if MostRecentError = "`nIn case a unit or building menu is currently shown:`nCould not detect the top left edge of the menu."
+		MostRecentError := ""
+	EdgeThickness := Floor((Zoom + 6) / 100)
+	if EdgeThickness = 0
+		EdgeThickness := 1
 	MapX := MapX + EdgeThickness - 1
 	MapY := MapY + EdgeThickness - 1
 	MapW := MapW - EdgeThickness
-	MapH := MapH - EdgeThickness
-	if isGameMaximized = "true"
+	MapH := MapH - EdgeThickness - 1
+	if isGameMaximized = "false"
 	{
-		if Scan.PixelRegion(16448221, HalfScreenWidth, MapY + MapH, 1, A_ScreenHeight - MapY - MapH, 0, &returnX:=0, &returnY:=0, "LRTB")
+		if Scan.PixelCountRegion(16448221, MapX - EdgeThickness - 2, MapY, 1, MapH,variance:=0) < MapH - 50
 		{
-			MostRecentError := "Game zoom is too high."
+			MostRecentError := "Something is blocking the view of the left edge of the map."
 			return
 		}
-		
-		
-		if Scan.ImageRegion("EndTurn.png", MapX + MapW, MapY, A_ScreenWidth - MapX - MapW, MapH, variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "RLBT")
+		if Scan.PixelCountRegion(16448221, MapX +  MapW + EdgeThickness + 2, MapY, 1, MapH,variance:=0) < MapH - 50
 		{
-		}
-		else
-		{
-			MostRecentError := "Cannot find end turn button."
+			MostRecentError := "Something is blocking the view of the right edge of the map."
 			return
 		}
-		if Scan.PixelRegion(8421504, MapX + MapW + EdgeThickness + 2, returnY + 2, 100, 70, 0, &returnX:=0, &returnY:=0, "LRBT")
+		if Scan.PixelCountRegion(16448221, MapX, MapY - EdgeThickness - 2, MapW, 1,variance:=0) < MapW / 2
 		{
-		}
-		else
-		{
-			MostRecentError := "Cannot detect the`nday counter to determin the zoom level."
+			MostRecentError := "Something is blocking the view of the top edge of the map."
 			return
 		}
-		DayCounterBorderX := returnX
-		DayCounterBorderY := returnY
-		Scan.PixelRegion(8421504, DayCounterBorderX + 0, DayCounterBorderY - 200, 1, 200, 0, &returnX:=0, &returnY:=0, "LRTB")
-		DayCounterHeight := DayCounterBorderY - returnY
-		Zoom := DayCounterHeight * 2
+		if Scan.PixelCountRegion(16448221, MapX, MapY + MapH + EdgeThickness + 2, MapW, 1,variance:=0) < MapW - 50
+		{
+			MostRecentError := "Something is blocking the view of the bottom edge of the map."
+			return
+		}
 	}
-	else
+	if !Scan.ImageRegion("Coin.png", 60, 60, A_ScreenWidth - 120, A_ScreenWidth - 120, variance:=0, &CoinX:=0, &CoinY:=0, centerResults:=0, "TBRL") and !Scan.ImageRegion("CoinMarked.png", 60, 60, A_ScreenWidth - 120, A_ScreenWidth - 120, variance:=0, &CoinX:=0, &CoinY:=0, centerResults:=0, "TBRL")
 	{
-		if Scan.PixelRegion(16448221, 50, 100, HalfScreenWidth - 50, A_ScreenHeight - 200, 0, &returnX:=0, &returnY:=0, "BTLR") ;Check if the beige frame is around the map, if so, the game is not full screen
-			BeigeBackgroundX := returnX
-		if Scan.PixelRegion(16448221, HalfScreenWidth, 100, HalfScreenWidth, A_ScreenHeight - 200, 0, &returnX:=0, &returnY:=0, "BTRL")
-			BeigeBackgroundWidth := returnX - BeigeBackgroundX + 1
-		if BeigeBackgroundWidth > A_ScreenWidth - 100
-		{
-			MostRecentError := "Zoom level too high."
-			return
-		}
-		Zoom := BeigeBackgroundWidth / 12
-	}
-		if Zoom < 77
-		{
-			MostRecentError := "Zoom level is not`nin the 80% to 300% range."
-			LastKeyHeldDown := 0
-			return
-		}
-		else if Zoom > 300
-		{
-			MostRecentError := "Zoom level is not`nin the 80% to 300% range."
-			LastKeyHeldDown := 0
-			return
-		}
-	if Scan.ImageRegion("EndTurn.png", HalfScreenWidth + 150, 0, A_ScreenWidth - HalfScreenWidth - 150, A_ScreenHeight, variance:=0, &returnX:=0, &returnY:=0, centerResults:=0, "RLTB")
-	{
-		EndTurnX := returnX
-		EndTurnY := returnY
-	}
-	else
-	{
-		MostRecentError := "Cannot find end turn button."
+		MostRecentError := "Something is blocking the view of the player info."
 		return
 	}
-	MostRecentError := "
+	MostRecentError := ""
 	isMapCalibrated := "true"
+	return
 }
-*/
 
 !p::
 {
