@@ -1136,13 +1136,31 @@ CheckIfMapHasChanged()
 CalibrateMapCoordAndZoom()
 {
 	global
-	Critical
 	Scan.Update()
 	if !Scan.ImageRegion("images\Coin.png", 60, 60, A_ScreenWidth - 120, A_ScreenWidth - 120, variance:=0, &CoinX:=0, &CoinY:=0, centerResults:=0, "BTRL") and !Scan.ImageRegion("images\CoinMarked.png", 60, 60, A_ScreenWidth - 120, A_ScreenWidth - 120, variance:=0, &CoinX:=0, &CoinY:=0, centerResults:=0, "BTRL")
 	{
 		MostRecentError := "Something is blocking the view of the player info. [1]"
 		Exit
 	}
+	
+	if !Scan.ImageRegion("images\1w220h.png", 5, 5, A_ScreenWidth - 300, A_ScreenHeight - 300, variance:=0, &testX:=0, &testY:=0, centerResults:=0, "TBLR")
+	{
+		MostRecentError := "Cannot detect the left edge of the map."
+		Exit
+	}
+	else
+	{
+		if Scan.PixelRegion(16448221, 50, testY, testX, 1, 0, &returnX:=0, &returnY:=0, "RLTB")
+		{
+			if !Scan.PixelRegion(16448221, testX, 5, 1, testY + 10, 0, &returnX:=0, &returnY:=0, "TBLR")
+				return
+			if !Scan.PixelRegion(16448221, testX, testY, A_ScreenWidth - returnX, 1, 0, &returnX:=0, &returnY:=0, "RLTB")
+				return
+			if !Scan.PixelRegion(16448221, testX, testY, 1, A_ScreenHeight - returnY, 0, &returnX:=0, &returnY:=0, "BTLR")
+				return
+		}	
+	}
+	Critical
 	MouseGetPos &mouseX, &mouseY
 	KeyWait "LButton", "L"
 	SimulatingInputsNow := "true"
