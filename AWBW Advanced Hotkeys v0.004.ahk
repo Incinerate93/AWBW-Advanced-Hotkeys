@@ -1076,7 +1076,7 @@ TooltipTimer()
 			InGameMenuWDisplay := InGameMenuW
 			InGameMenuHDisplay := InGameMenuH
 		}
-		Tooltip wasADifferentUnitSelected " " mouseXUnitSelected " " mouseYUnitSelected "`nMap:`t`tX: " MapXDisplay " Y: " MapYDisplay " W: " MapWDisplay + MapXDisplay " H: " MapHDisplay  "`n`t`tSize:`t`t(" NumberOfTilesXDisplay "/" NumberOfTilesYDisplay ")`n`t`tZoom:`t`t" ZoomDisplay "`n`t`tMaximized:`t" isGameMaximized  "`n`t`tCalibrated:`t" isMapCalibrated "`n`nInGameMenu:`tX: " InGameMenuXDisplay "Y: " InGameMenuYDisplay " W: " InGameMenuWDisplay " H: " InGameMenuHDisplay "`n`t`tMenuType:`t" InGameMenuType "`n`t`tisUnitSelected:`t" isUnitSelected "`n`nLatency:`t`tScreenBuffer:`t" ScreenBuffer " ms`n`t`tPixelScan:`t" PixelScan " ms`n`nMostRecentError: "  MostRecentError, A_ScreenWidth / 14 *  5 , 0
+		Tooltip "Map:`t`tX: " MapXDisplay " Y: " MapYDisplay " W: " MapWDisplay + MapXDisplay " H: " MapHDisplay  "`n`t`tSize:`t`t(" NumberOfTilesXDisplay "/" NumberOfTilesYDisplay ")`n`t`tZoom:`t`t" ZoomDisplay "`n`t`tMaximized:`t" isGameMaximized  "`n`t`tCalibrated:`t" isMapCalibrated "`n`nInGameMenu:`tX: " InGameMenuXDisplay "Y: " InGameMenuYDisplay " W: " InGameMenuWDisplay " H: " InGameMenuHDisplay "`n`t`tMenuType:`t" InGameMenuType "`n`t`tisUnitSelected:`t" isUnitSelected "`n`nLatency:`t`tScreenBuffer:`t" ScreenBuffer " ms`n`t`tPixelScan:`t" PixelScan " ms`n`nMostRecentError: "  MostRecentError, A_ScreenWidth / 14 *  5 , 0
 	}
 	else
 		Tooltip
